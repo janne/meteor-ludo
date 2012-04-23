@@ -1,0 +1,15 @@
+table#board td {
+  border: solid 1px #aaa;
+  width: 20px;
+  height: 20px;
+}
+
+.red { background: #f00; }
+.green { background: #0f0; }
+.blue { background: #00f; }
+.yellow { background: #ff0; }
+
+div.square {
+  width: 100%;
+  height: 100%;
+}
