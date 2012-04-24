@@ -4,13 +4,13 @@
 # @OUTER_LENGTH = 8 + 8 * HOME_SQUARES
 # @TOTAL_LENGTH = OUTER_LENGTH + HOME_SQUARES
 
-@COLORS = ['#f00', '#0f0', '#00f', '#ff0']
+@COLORS = ['red', 'green', 'blue', 'yellow']
 
-# { color }
+# { color, pieces }
 @Square = new Meteor.Collection('square')
 
-# { color, start_square }
+# { color, start_square, pieces }
 @Player = new Meteor.Collection('player')
 
-# { player, square }
+# { color }
 @Piece = new Meteor.Collection('piece')

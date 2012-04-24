@@ -7,20 +7,19 @@
 </body>
 
 <template name="board">
-<table id="board">
-  {{#each column}}
-  <tr id="row_{{this}}">
-    {{#each column}}
-    <td id="col_{{this}}">
-    </td>
-    {{/each}}
-  </tr>
-  {{/each}}
-</table>
+{{#each squares}}
+  {{> square}}
+{{/each}}
 </template>
 
 <template name="square">
-<div class="square">
-  x
+<div class="square {{color}}" style="left:{{left}}px; top:{{top}}px">
+  {{#if piece}}
+  {{> piece}}
+  {{/if}}
 </div>
+</template>
+
+<template name="piece">
+<div class="piece {{color}}"></div>
 </template>
