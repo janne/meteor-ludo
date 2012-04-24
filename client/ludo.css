@@ -3,6 +3,11 @@
 .piece.blue { background: #00f; }
 .piece.yellow { background: #ff0; }
 
+.square.red { border-color: #f00; }
+.square.green { border-color: #0f0; }
+.square.blue { border-color: #00f; }
+.square.yellow { border-color: #ff0; }
+
 div.square {
   position: absolute;
   width: 40px;
@@ -11,8 +16,6 @@ div.square {
 }
 
 div.piece {
-  /*position: relative;*/
   width: 50%;
   height:50%;
-  border: solix 2px red;
 }
