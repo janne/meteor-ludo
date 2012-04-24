@@ -12,10 +12,12 @@ div.square {
   position: absolute;
   width: 40px;
   height: 40px;
-  border: solid 1px #aaa;
+  border: solid 1px;
 }
 
 div.piece {
-  width: 50%;
-  height:50%;
+  width: 80%;
+  height: 80%;
+  border: solid 1px black;
+  margin: 2px;
 }
