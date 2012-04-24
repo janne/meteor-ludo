@@ -3,8 +3,9 @@ Template.board.squares = ->
 
 Template.square.events =
   'click': ->
-    console.log "Square #{this._id}"
-
-Template.piece.events =
-  'click': ->
-    console.log "Piece #{this._id}"
+    if this.piece
+      squares = (square._id for square in Square.find().fetch())
+      index = squares.indexOf(this._id)
+      move_to_square = squares[(index + 1) % OUTER_LENGTH]
+      Square.update(this._id, $set: { piece: null })
+      Square.update(move_to_square, $set: { piece:this.piece })
