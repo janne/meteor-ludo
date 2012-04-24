@@ -2,53 +2,57 @@ Meteor.startup ->
   Player.remove {}
   Square.remove {}
   Piece.remove {}
-  squares = []
-  for player_id in [0..3]
-    color = COLORS[player_id]
-    pieces = []
-    for num in [0..PLAYER_DIFF-1]
-      y = player_id * 40 + num * 40
-      x = num * 40
-      piece = if num == 0 then Piece.findOne(Piece.insert(color:color)) else null
-      pieces.push(piece) if piece
-      square = Square.findOne Square.insert({piece:piece, color:color})
-      squares.push(square)
-
-    Player.findOne Player.insert({color:color, pieces:pieces })
 
   i = 0
-  # Blue
+
+  color = 'blue'
   for top in [0..HOME_LENGTH]
     left = HOME_LENGTH+2
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
   for left in [HOME_LENGTH+3..2*HOME_LENGTH+2]
     top = HOME_LENGTH
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
-  Square.update(squares[i++], $set: { left:(2*HOME_LENGTH+2)*SPACING, top:(HOME_LENGTH+1)*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
+  left = (2*HOME_LENGTH+2)
+  top = (HOME_LENGTH+1)
+  Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
 
-  # Green
+  color = 'green'
   for left in [2*HOME_LENGTH+2..HOME_LENGTH+2]
     top = HOME_LENGTH+2
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
   for top in [HOME_LENGTH+3..2*HOME_LENGTH+2]
     left = HOME_LENGTH+2
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
-  Square.update(squares[i++], $set: { left:(HOME_LENGTH+1)*SPACING, top:(2*HOME_LENGTH+2)*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
+  left = HOME_LENGTH+1
+  top = 2*HOME_LENGTH+2
+  Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
 
-  # Yellow
+  color = 'yellow'
   for top in [2*HOME_LENGTH+2..HOME_LENGTH+2]
     left = HOME_LENGTH
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
   for left in [HOME_LENGTH-1..0]
     top = HOME_LENGTH+2
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
-  Square.update(squares[i++], $set: { left:0, top:(HOME_LENGTH+1)*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
+  left = 0
+  top = HOME_LENGTH+1
+  Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
 
-  # Red
+  color = 'red'
   for left in [0..HOME_LENGTH]
     top = HOME_LENGTH
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
   for top in [HOME_LENGTH-1..0]
     left = HOME_LENGTH
-    Square.update(squares[i++], $set: { left:left*SPACING, top:top*SPACING})
-  Square.update(squares[i++], $set: { left:(HOME_LENGTH+1)*SPACING, top:0})
+    Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
+  left = HOME_LENGTH+1
+  top = 0
+  Square.insert(color:color, left:left*SPACING, top:top*SPACING, i:i++)
+
+  squares = Square.find().fetch()
+  for player_id in [0..3]
+    color = COLORS[player_id]
+    square = squares[player_id * PLAYER_DIFF]
+    piece = Piece.findOne(Piece.insert(color:color))
+    Square.update(square._id, $set: { piece:piece })
+    Player.insert(color:color, pieces:[piece])
